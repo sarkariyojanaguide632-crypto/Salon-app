@@ -72,7 +72,13 @@
 <script>
     document.getElementById('bookingForm').addEventListener('submit', function(e) {
         e.preventDefault();
-        alert('धन्यवाद! आपकी बुकिंग प्रक्रिया पूरी हो गई है। जल्द ही WhatsApp पर कन्फर्मेशन आ जाएगा।');
+        const name = document.getElementById('name').value;
+        const phone = document.getElementById('phone').value;
+        const service = document.getElementById('service').value;
+        const date = document.getElementById('date').value;
+        
+        alert(`धन्यवाद ${name}! आपकी बुकिंग कन्फर्म हो गई है।`);
+        console.log("Booking Details:", { name, phone, service, date });
     });
 </script>
 
