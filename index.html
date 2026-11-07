@@ -2,30 +2,79 @@
 <html lang="hi">
 <head>
     <meta charset="UTF-8">
-    <title>रॉयल सैलून</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>रॉयल सैलून - प्रोफेशनल हेयर और ब्यूटी केयर</title>
+    <style>
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+        body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; line-height: 1.6; background-color: #f4f4f9; color: #333; }
+        header { background: #1a1a1a; color: #fff; padding: 2rem 1rem; text-align: center; border-bottom: 4px solid #e67e22; }
+        header h1 { font-size: 2.5rem; margin-bottom: 0.5rem; }
+        .container { max-width: 800px; margin: 20px auto; padding: 0 20px; }
+        section { background: #fff; padding: 25px; margin-bottom: 20px; border-radius: 10px; box-shadow: 0 4px 6px rgba(0,0,0,0.1); }
+        h2 { color: #2c3e50; margin-bottom: 15px; border-bottom: 2px solid #eee; padding-bottom: 10px; }
+        .services-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 15px; }
+        .service-card { background: #f9f9f9; padding: 15px; border-radius: 8px; text-align: center; border: 1px solid #e9e9e9; }
+        .form-group { margin-bottom: 15px; }
+        label { display: block; margin-bottom: 5px; font-weight: bold; }
+        input, select { width: 100%; padding: 12px; border: 1px solid #ccc; border-radius: 5px; font-size: 1rem; }
+        button { width: 100%; background-color: #e67e22; color: white; padding: 12px; border: none; border-radius: 5px; font-size: 1.2rem; cursor: pointer; transition: background 0.3s; }
+        button:hover { background-color: #d35400; }
+    </style>
 </head>
 <body>
-    <header>
-        <h1>रॉयल सैलून</h1>
-        <p>बेहतरीन हेयर और ब्यूटी सर्विस</p>
-    </header>
+
+<header>
+    <h1>रॉयल सैलून</h1>
+    <p>प्रीमियम हेयर और ग्रूमिंग अनुभव</p>
+</header>
+
+<div class="container">
     <section>
-        <h2>हमारी सेवाएँ</h2>
-        <ul>
-            <li>हेयर कट</li>
-            <li>शेविंग</li>
-            <li>फेशियल</li>
-        </ul>
+        <h2>हमारी विशेषताएँ</h2>
+        <div class="services-grid">
+            <div class="service-card"><h3>मॉडर्न हेयरकट</h3><p>एक्सपर्ट स्टाइलिस्ट द्वारा</p></div>
+            <div class="service-card"><h3>दाढ़ी की सेटिंग</h3><p>क्लासिक शेव और ट्रिम</p></div>
+            <div class="service-card"><h3>प्रोफेशनल फेशियल</h3><p>त्वचा की खास देखभाल</p></div>
+            <div class="service-card"><h3>हेयर स्पा</h3><p>रिलैक्सिंग ट्रीटमेंट</p></div>
+        </div>
     </section>
+
     <section>
-        <h2>अपॉइंटमेंट बुक करें</h2>
-        <form>
-            <label>नाम:</label><br>
-            <input type="text"><br><br>
-            <label>मोबाइल:</label><br>
-            <input type="text"><br><br>
-            <button type="submit">बुक करें</button>
+        <h2>ऑनलाइन अपॉइंटमेंट बुक करें</h2>
+        <form id="bookingForm">
+            <div class="form-group">
+                <label for="name">आपका नाम:</label>
+                <input type="text" id="name" required placeholder="पूरा नाम लिखें">
+            </div>
+            <div class="form-group">
+                <label for="phone">WhatsApp मोबाइल नंबर:</label>
+                <input type="tel" id="phone" required placeholder="9876543210">
+            </div>
+            <div class="form-group">
+                <label for="service">सेवा चुनें:</label>
+                <select id="service" required>
+                    <option value="">--सर्विस चुनें--</option>
+                    <option value="haircut">हेयर कट</option>
+                    <option value="shave">शेविंग/ट्रिमिंग</option>
+                    <option value="facial">फेशियल</option>
+                    <option value="spa">हेयर स्पा</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <label for="date">तारीख:</label>
+                <input type="date" id="date" required>
+            </div>
+            <button type="submit">अपॉइंटमेंट कन्फर्म करें</button>
         </form>
     </section>
+</div>
+
+<script>
+    document.getElementById('bookingForm').addEventListener('submit', function(e) {
+        e.preventDefault();
+        alert('धन्यवाद! आपकी बुकिंग प्रक्रिया पूरी हो गई है। जल्द ही WhatsApp पर कन्फर्मेशन आ जाएगा।');
+    });
+</script>
+
 </body>
 </html>
