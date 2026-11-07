@@ -3,259 +3,390 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>रॉयल सैलून - प्रोफेशनल मैनेजमेंट</title>
+    <title>रॉयल सैलून - स्मार्ट प्रीमियम ऐप</title>
     <style>
         :root {
             --primary: #76a052;
             --primary-dark: #5c803d;
+            --accent-gold: #d4af37;
             --accent-orange: #d9822b;
-            --bg-light: #f6f5f0;
-            --card-bg: #fffcf7;
-            --text: #333333;
-            --text-muted: #777777;
-            --border: #e2ddd3;
-            --danger: #e74c3c;
+            --bg-light: #f8f7f2;
+            --card-bg: #ffffff;
+            --text-main: #2b2b2b;
+            --text-muted: #666666;
+            --border: #e4e0d5;
+            --shadow: 0 4px 15px rgba(0,0,0,0.05);
         }
 
-        * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Segoe UI', Roboto, sans-serif; }
-        body { background-color: var(--bg-light); color: var(--text); padding-bottom: 80px; }
+        * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Segoe UI', system-ui, sans-serif; }
+        body { background-color: var(--bg-light); color: var(--text-main); padding-bottom: 75px; }
 
-        header { background: #fff; padding: 12px 16px; display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid var(--border); position: sticky; top: 0; z-index: 1000; }
-        .logo-area { display: flex; align-items: center; gap: 8px; font-weight: bold; font-size: 1.2rem; color: var(--primary-dark); }
-        .logo-icon { width: 30px; height: 30px; background: var(--primary); color: white; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-weight: bold; }
-        
-        .container { max-width: 480px; margin: 0 auto; padding: 16px; }
-        .screen { display: none; }
+        /* टॉप हेडर */
+        header { 
+            background: #ffffff; 
+            padding: 12px 18px; 
+            display: flex; 
+            justify-content: space-between; 
+            align-items: center; 
+            border-bottom: 1px solid var(--border); 
+            position: sticky; 
+            top: 0; 
+            z-index: 1000;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.03);
+        }
+        .brand { display: flex; align-items: center; gap: 10px; }
+        .brand-logo { 
+            width: 36px; height: 36px; 
+            background: linear-gradient(135deg, var(--primary), var(--primary-dark)); 
+            color: white; border-radius: 10px; 
+            display: flex; align-items: center; justify-content: center; 
+            font-weight: bold; font-size: 1.1rem;
+        }
+        .brand-title { font-size: 1.15rem; font-weight: 700; color: #1a1a1a; }
+        .role-badge { 
+            font-size: 0.75rem; 
+            background: #edf5e6; 
+            color: var(--primary-dark); 
+            padding: 4px 10px; 
+            border-radius: 20px; 
+            font-weight: 600;
+        }
+
+        .container { max-width: 500px; margin: 0 auto; padding: 16px; }
+        .screen { display: none; animation: fadeIn 0.3s ease-in-out; }
         .screen.active { display: block; }
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(5px); } to { opacity: 1; transform: translateY(0); } }
 
-        .card { background: var(--card-bg); border: 1px solid var(--border); border-radius: 12px; padding: 16px; margin-bottom: 16px; box-shadow: 0 2px 4px rgba(0,0,0,0.03); }
-        .form-group { margin-bottom: 14px; }
-        label { display: block; font-size: 0.9rem; color: var(--text-muted); margin-bottom: 6px; font-weight: 600; }
-        input, select { width: 100%; padding: 12px; border: 1px solid var(--border); border-radius: 8px; font-size: 1rem; background: #fff; outline: none; }
-        input:focus { border-color: var(--primary); }
+        /* कार्ड्स और UI एलिमेंट्स */
+        .card { 
+            background: var(--card-bg); 
+            border: 1px solid var(--border); 
+            border-radius: 14px; 
+            padding: 16px; 
+            margin-bottom: 16px; 
+            box-shadow: var(--shadow);
+        }
+        
+        .form-group { margin-bottom: 12px; }
+        label { display: block; font-size: 0.85rem; color: var(--text-muted); margin-bottom: 5px; font-weight: 600; }
+        input, select, textarea { 
+            width: 100%; padding: 11px 14px; 
+            border: 1px solid var(--border); 
+            border-radius: 9px; font-size: 0.95rem; 
+            background: #fafafa; outline: none; transition: 0.2s;
+        }
+        input:focus, select:focus { border-color: var(--primary); background: #fff; }
 
-        .btn { width: 100%; padding: 12px; border: none; border-radius: 8px; font-size: 1rem; font-weight: bold; cursor: pointer; transition: 0.2s; text-align: center; }
+        .btn { 
+            width: 100%; padding: 12px; border: none; 
+            border-radius: 9px; font-size: 0.95rem; font-weight: 700; 
+            cursor: pointer; transition: 0.2s; text-align: center;
+        }
         .btn-primary { background: var(--primary); color: white; }
         .btn-primary:hover { background: var(--primary-dark); }
         .btn-accent { background: var(--accent-orange); color: white; }
-        .btn-danger { background: var(--danger); color: white; }
+        .btn-dark { background: #222; color: white; }
 
-        .role-card { border: 1px solid var(--border); border-radius: 12px; padding: 16px; background: #fff; margin-bottom: 12px; }
-        .role-title { font-weight: bold; font-size: 1.1rem; margin-bottom: 4px; display: flex; align-items: center; gap: 8px; }
+        /* गैलरी ग्रिड */
+        .gallery-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 10px; margin-top: 10px; }
+        .gallery-item { 
+            height: 110px; background: #e0e0e0; border-radius: 10px; 
+            display: flex; align-items: center; justify-content: center; 
+            color: #777; font-size: 0.85rem; font-weight: 600;
+            background-size: cover; background-position: center;
+        }
 
-        .stats-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-bottom: 16px; }
-        .stat-box { background: #fff; border: 1px solid var(--border); border-radius: 10px; padding: 12px; text-align: center; }
-        .stat-val { font-size: 1.5rem; font-weight: bold; color: var(--primary-dark); }
-        .stat-lbl { font-size: 0.8rem; color: var(--text-muted); }
+        /* सर्विस कार्ड्स */
+        .service-card { 
+            display: flex; justify-content: space-between; align-items: center; 
+            padding: 12px; border: 1px solid var(--border); border-radius: 10px; margin-bottom: 8px; background: #fff;
+        }
+        .service-price { font-weight: bold; color: var(--primary-dark); }
 
-        .services-list { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
-        .service-item { background: #fff; border: 1px solid var(--border); padding: 10px; border-radius: 8px; text-align: center; }
-
-        .bottom-nav { position: fixed; bottom: 0; left: 0; right: 0; background: #fff; border-top: 1px solid var(--border); display: flex; justify-content: space-around; padding: 8px 0; max-width: 480px; margin: 0 auto; z-index: 1000; }
-        .nav-item { text-align: center; font-size: 0.75rem; color: var(--text-muted); text-decoration: none; cursor: pointer; flex: 1; display: none; }
-        .nav-item.active { color: var(--primary-dark); font-weight: bold; }
-        .nav-icon { font-size: 1.2rem; display: block; margin-bottom: 2px; }
+        /* बॉटम नेविगेशन */
+        .bottom-nav { 
+            position: fixed; bottom: 0; left: 0; right: 0; 
+            background: #ffffff; border-top: 1px solid var(--border); 
+            display: flex; justify-content: space-around; padding: 6px 0; 
+            max-width: 500px; margin: 0 auto; z-index: 1000;
+        }
+        .nav-btn { 
+            border: none; background: none; text-align: center; 
+            font-size: 0.7rem; color: var(--text-muted); cursor: pointer; flex: 1; padding: 4px;
+        }
+        .nav-btn.active { color: var(--primary-dark); font-weight: bold; }
+        .nav-icon { font-size: 1.25rem; display: block; margin-bottom: 2px; }
     </style>
 </head>
 <body>
 
 <header>
-    <div class="logo-area">
-        <div class="logo-icon">RS</div>
-        <span id="headerShopName">रॉयल सैलून</span>
+    <div class="brand">
+        <div class="brand-logo">RS</div>
+        <div class="brand-title" id="headerTitle">रॉयल सैलून</div>
     </div>
-    <div style="font-size: 0.85rem; color: var(--text-muted);" id="userRoleTag">गेस्ट मोड</div>
+    <div class="role-badge" id="roleTag">गेस्ट मोड</div>
 </header>
 
 <div class="container">
 
-    <!-- 1. ऑनबोर्डिंग और लॉगिन स्क्रीन -->
-    <div id="screen-onboarding" class="screen active">
-        <div style="text-align: center; margin: 20px 0;">
-            <h2 style="color: var(--primary-dark);">स्वागत है</h2>
-            <p style="color: var(--text-muted); font-size: 0.9rem;">अपना रोल चुनें या लॉगिन करें</p>
+    <!-- 1. होम / ऑनबोर्डिंग / लॉगिन स्क्रीन -->
+    <div id="screen-home" class="screen active">
+        <div class="card" style="text-align: center; background: linear-gradient(135deg, #76a052 0%, #5c803d 100%); color: white;">
+            <h2 style="font-size: 1.4rem; margin-bottom: 5px;">प्रीमियम स्टाइलिंग का अनुभव</h2>
+            <p style="font-size: 0.85rem; opacity: 0.9;">ऑनलाइन अपॉइंटमेंट बुक करें व अपनी सुविधा चुनें</p>
         </div>
 
-        <!-- ओनर सेक्शन -->
-        <div class="role-card">
-            <div class="role-title">💈 सैलून सेटअप (ओनर)</div>
-            <div class="form-group"><input type="text" id="ownerShopNameInput" placeholder="सैलून का नाम"></div>
-            <div class="form-group"><input type="password" id="ownerPinInput" placeholder="मालिक का 4-अंकों का पिन"></div>
-            <button class="btn btn-primary" onclick="handleOwnerLogin()">ओनर के रूप में लॉगिन</button>
-        </div>
-
-        <!-- स्टाफ सेक्शन -->
-        <div class="role-card">
-            <div class="role-title">👥 स्टाफ लॉगिन</div>
-            <div class="form-group"><input type="text" id="staffCodeInput" placeholder="6-अंकों का जॉइनिंग कोड"></div>
-            <button class="btn btn-accent" onclick="handleStaffLogin()">स्टाफ के रूप में लॉगिन</button>
-        </div>
-
-        <!-- कस्टमर सेक्शन -->
-        <div class="role-card">
-            <div class="role-title">✂️ कस्टमर पोर्टल</div>
-            <div class="form-group"><input type="tel" placeholder="मोबाइल नंबर"></div>
-            <div class="form-group"><input type="password" placeholder="4-अंकों का पासवर्ड"></div>
+        <!-- कस्टमर लॉगिन कार्ड -->
+        <div class="card">
+            <h3 style="font-size: 1.05rem; margin-bottom: 12px;">✂️ कस्टमर पोर्टल (लॉगिन / रजिस्ट्रेशन)</h3>
+            <div class="form-group"><input type="tel" id="custPhone" placeholder="मोबाइल नंबर"></div>
+            <div class="form-group"><input type="password" id="custPass" placeholder="4-अंकों का पासकोड"></div>
             <div class="form-group">
-                <label>भाषा चुनें</label>
-                <select><option>Hindi</option><option>English</option></select>
+                <select id="custLang">
+                    <option value="hi">हिंदी (Hindi)</option>
+                    <option value="en">English</option>
+                </select>
             </div>
-            <button class="btn" style="background: #333; color: white;" onclick="switchRole('customer')">कस्टमर बुक करें</button>
+            <button class="btn btn-primary" onclick="loginCustomer()">लॉगिन करें / आगे बढ़ें</button>
+        </div>
+
+        <!-- स्टाफ लॉगिन कार्ड -->
+        <div class="card">
+            <h3 style="font-size: 1.05rem; margin-bottom: 12px;">👥 स्टाफ पोर्टल लॉगिन</h3>
+            <div class="form-group"><input type="text" id="staffCode" placeholder="मालिक द्वारा दिया गया 6-डिजिट कोड"></div>
+            <button class="btn btn-accent" onclick="loginStaff()">स्टाफ लॉगिन</button>
+        </div>
+
+        <!-- ओनर सेक्रेट एंट्री -->
+        <div class="card">
+            <h3 style="font-size: 1.05rem; margin-bottom: 12px;">💈 सैलून मालिक / ओनर लॉगिन</h3>
+            <div class="form-group"><input type="password" id="ownerPin" placeholder="मास्टर सिक्रेट पिन दर्ज करें"></div>
+            <button class="btn btn-dark" onclick="loginOwner()">ओनर पैनल खोलें</button>
         </div>
     </div>
 
-    <!-- 2. ओनर डैशबोर्ड -->
-    <div id="screen-owner" class="screen">
-        <div class="card" style="background: #eef5e8; border-color: #cce0bc;">
-            <h3>ओनर डैशबोर्ड</h3>
-            <p style="font-size: 0.85rem; color: var(--text-muted);" id="displayShopName">रॉयल सैलून</p>
-        </div>
-
-        <div class="stats-grid">
-            <div class="stat-box"><div class="stat-lbl">आज की बिक्री</div><div class="stat-val">₹3,500</div></div>
-            <div class="stat-box"><div class="stat-lbl">पेंडिंग बुकिंग</div><div class="stat-val" style="color: var(--accent-orange);">5</div></div>
-        </div>
-
-        <div class="card">
-            <h4>एडिटेबल सेटिंग्स</h4>
-            <div class="form-group" style="margin-top: 10px;">
-                <label>सैलून का नाम बदलें</label>
-                <input type="text" id="editShopName" value="रॉयल सैलून">
-            </div>
-            <div class="form-group">
-                <label>स्टाफ जॉइनिंग कोड अपडेट करें</label>
-                <input type="text" id="editStaffCode" value="789012">
-            </div>
-            <div class="form-group">
-                <label>मालिक का लॉगिन पिन बदलें</label>
-                <input type="password" id="editOwnerPin" value="1234">
-            </div>
-            <button class="btn btn-primary" onclick="saveOwnerSettings()">बदलाव सेव करें</button>
-        </div>
-    </div>
-
-    <!-- 3. स्टाफ डैशबोर्ड -->
-    <div id="screen-worker" class="screen">
-        <div class="card">
-            <h3>वर्कर पोर्टल</h3>
-            <p style="font-size: 0.85rem; color: var(--text-muted);">आपकी आज की अपॉइंटमेंट्स</p>
-        </div>
-        <div class="card">
-            <div style="display: flex; justify-content: space-between; margin-bottom: 8px;">
-                <span><strong>विकास</strong> (हेयरकट)</span>
-                <span style="color: var(--primary-dark); font-weight: bold;">11:00 AM</span>
-            </div>
-            <button class="btn btn-primary" onclick="alert('बिल बन गया!')">बिल बनाएं (₹300)</button>
-        </div>
-    </div>
-
-    <!-- 4. कस्टमर बुकिंग -->
+    <!-- 2. कस्टमर डैशबोर्ड (सेवाएं, बुकिंग व गैलरी) -->
     <div id="screen-customer" class="screen">
+        <!-- गैलरी सेक्शन -->
         <div class="card">
-            <h3>हमारी सेवाएँ</h3>
-            <div class="services-list" style="margin-top: 10px;">
-                <div class="service-item"><strong>हेयरकट</strong><br><span style="color:var(--primary-dark);">₹300</span></div>
-                <div class="service-item"><strong>शेविंग</strong><br><span style="color:var(--primary-dark);">₹150</span></div>
+            <h3 style="font-size: 1rem; margin-bottom: 8px;">📸 सैलून लुकबुक & गैलरी</h3>
+            <div class="gallery-grid">
+                <div class="gallery-item" style="background-image: url('https://images.unsplash.com/photo-1503951914875-452162b0f3f1?w=300');"></div>
+                <div class="gallery-item" style="background-image: url('https://images.unsplash.com/photo-1585747860715-2ba37e788b70?w=300');"></div>
             </div>
         </div>
+
+        <!-- सर्विसेज लिस्ट -->
         <div class="card">
-            <h3>सर्विस बुक करें</h3>
-            <form onsubmit="event.preventDefault(); alert('बुकिंग कन्फर्म हो गई है!');">
-                <div class="form-group"><label>आपका नाम</label><input type="text" required placeholder="नाम"></div>
-                <button type="submit" class="btn btn-accent">कन्फर्म करें</button>
+            <h3 style="font-size: 1rem; margin-bottom: 12px;">💈 उपलब्ध सेवाएं व रेट</h3>
+            <div id="customerServiceList">
+                <!-- जावास्क्रिप्ट से लोड होगा -->
+            </div>
+        </div>
+
+        <!-- बुकिंग फॉर्म -->
+        <div class="card">
+            <h3 style="font-size: 1rem; margin-bottom: 12px;">📅 नई अपॉइंटमेंट बुक करें</h3>
+            <form onsubmit="event.preventDefault(); submitBooking();">
+                <div class="form-group"><label>आपका नाम</label><input type="text" id="bookName" required placeholder="पूरा नाम दर्ज करें"></div>
+                <div class="form-group"><label>फोन नंबर</label><input type="tel" id="bookPhone" required placeholder="10-अंकों का नंबर"></div>
+                <div class="form-group">
+                    <label>सर्विस चुनें</label>
+                    <select id="bookServiceSelect"></select>
+                </div>
+                <div class="form-group"><label>तारीख और समय</label><input type="datetime-local" required></div>
+                <button type="submit" class="btn btn-primary">अपॉइंटमेंट कन्फर्म करें</button>
             </form>
         </div>
     </div>
 
+    <!-- 3. वर्कर / स्टाफ डैशबोर्ड -->
+    <div id="screen-staff" class="screen">
+        <div class="card" style="background: #eef5e8;">
+            <h3>आज की अपॉइंटमेंट्स (स्टाफ)</h3>
+            <p style="font-size: 0.8rem; color: var(--text-muted);">सभी आने वाले ग्राहकों की लिस्ट</p>
+        </div>
+        <div id="staffAppointmentList">
+            <!-- डायनामिक लिस्ट -->
+        </div>
+    </div>
+
+    <!-- 4. ओनर कंट्रोल पैनल (एडिटेबल सेटिंग्स) -->
+    <div id="screen-owner" class="screen">
+        <div class="card" style="background: #fff8e7; border-color: #ffe0b2;">
+            <h3>👑 ओनर कंट्रोल सेंटर</h3>
+            <p style="font-size: 0.8rem; color: var(--text-muted);">अपनी पूरी वेबसाइट की सेटिंग्स यहाँ से बदलें</p>
+        </div>
+
+        <!-- बेसिक सेटिंग्स -->
+        <div class="card">
+            <h4 style="margin-bottom: 10px;">सैलून प्रोफाइल सेटिंग्स</h4>
+            <div class="form-group">
+                <label>सैलून का नाम</label>
+                <input type="text" id="settingShopName" value="रॉयल सैलून">
+            </div>
+            <div class="form-group">
+                <label>स्टाफ जॉइनिंग कोड (6-डिजिट)</label>
+                <input type="text" id="settingStaffCode" value="789012">
+            </div>
+            <div class="form-group">
+                <label>ओनर मास्टर पिन</label>
+                <input type="password" id="settingOwnerPin" value="1234">
+            </div>
+            <button class="btn btn-primary" onclick="saveSettings()">सेटिंग्स सेव करें</button>
+        </div>
+
+        <!-- प्राइस व सर्विसेज एडिटर -->
+        <div class="card">
+            <h4 style="margin-bottom: 10px;">नई सर्विस / प्राइस जोड़ें</h4>
+            <div class="form-group"><input type="text" id="newServiceName" placeholder="सर्विस का नाम (जैसे: हेयर स्पा)"></div>
+            <div class="form-group"><input type="number" id="newServicePrice" placeholder="कीमत (₹)"></div>
+            <button class="btn btn-accent" onclick="addService()">सर्विस जोड़ें</button>
+        </div>
+    </div>
+
 </div>
 
-<!-- बॉटम नेविगेशन बार -->
-<div class="bottom-nav" id="bottomNav">
-    <div class="nav-item owner-only" onclick="toggleScreen('screen-owner')">
-        <span class="nav-icon">📊</span> ओनर डैशबोर्ड
-    </div>
-    <div class="nav-item staff-only" onclick="toggleScreen('screen-worker')">
-        <span class="nav-icon">🧾</span> वर्कर पोर्टल
-    </div>
-    <div class="nav-item customer-only" onclick="toggleScreen('screen-customer')">
-        <span class="nav-icon">✂️</span> बुकिंग्स
-    </div>
-    <div class="nav-item active" style="display: flex;" onclick="logout()">
-        <span class="nav-icon">🔒</span> लॉग आउट
-    </div>
+<!-- बॉटम नेविगेशन Bar -->
+<div class="bottom-nav">
+    <button class="nav-btn active" onclick="navTo('screen-home', this)">
+        <span class="nav-icon">🏠</span> होम / मोड
+    </button>
+    <button class="nav-btn" onclick="navTo('screen-customer', this)">
+        <span class="nav-icon">✂️</span> सेवाएं & बुकिंग
+    </button>
+    <button class="nav-btn" onclick="navTo('screen-staff', this)">
+        <span class="nav-icon">🧾</span> स्टाफ व्यू
+    </button>
+    <button class="nav-btn" onclick="navTo('screen-owner', this)">
+        <span class="nav-icon">⚙️</span> ओनर कंट्रोल
+    </button>
 </div>
 
 <script>
-    let currentRole = 'guest';
-    const SECRET_OWNER_PIN = "1234"; 
-    const VALID_STAFF_CODE = "789012";
+    // डेटा स्टेट (लोकल स्टोरेज सपोर्ट)
+    let state = {
+        shopName: "रॉयल सैलून",
+        staffCode: "789012",
+        ownerPin: "1234",
+        services: [
+            { name: "हेयरकट & स्टाइलिंग", price: 250 },
+            { name: "दाढ़ी ट्रिम व शेप", price: 120 },
+            { name: "फेस फेशियल & ग्लो", price: 600 }
+        ],
+        appointments: [
+            { name: "अमित शर्मा", phone: "9876543210", service: "हेयरकट & स्टाइलिंग", time: "11:30 AM" }
+        ]
+    };
 
-    function switchRole(role) {
-        currentRole = role;
-        document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
-        document.querySelectorAll('.nav-item').forEach(item => item.style.display = 'none');
-        document.getElementById('bottomNav').style.display = 'flex';
-
-        if (role === 'owner') {
-            document.getElementById('screen-owner').classList.add('active');
-            document.querySelectorAll('.owner-only').forEach(i => i.style.display = 'block');
-            document.getElementById('userRoleTag').innerText = "ओनर मोड";
-        } else if (role === 'staff') {
-            document.getElementById('screen-worker').classList.add('active');
-            document.querySelectorAll('.staff-only').forEach(i => i.style.display = 'block');
-            document.getElementById('userRoleTag').innerText = "स्टाफ मोड";
-        } else if (role === 'customer') {
-            document.getElementById('screen-customer').classList.add('active');
-            document.querySelectorAll('.customer-only').forEach(i => i.style.display = 'block');
-            document.getElementById('userRoleTag').innerText = "कस्टमर मोड";
-        }
+    function init() {
+        renderServices();
+        renderAppointments();
     }
 
-    function toggleScreen(screenId) {
+    function renderServices() {
+        const container = document.getElementById('customerServiceList');
+        const select = document.getElementById('bookServiceSelect');
+        container.innerHTML = '';
+        select.innerHTML = '';
+
+        state.services.forEach(s => {
+            container.innerHTML += `
+                <div class="service-card">
+                    <span>${s.name}</span>
+                    <span class="service-price">₹${s.price}</span>
+                </div>
+            `;
+            select.innerHTML += `<option>${s.name} - ₹${s.price}</option>`;
+        });
+    }
+
+    function renderAppointments() {
+        const list = document.getElementById('staffAppointmentList');
+        list.innerHTML = '';
+        state.appointments.forEach((a, i) => {
+            list.innerHTML += `
+                <div class="card">
+                    <div style="display:flex; justify-content:space-between; margin-bottom:6px;">
+                        <strong>${a.name} (${a.phone})</strong>
+                        <span style="color:var(--primary-dark); font-weight:bold;">${a.time}</span>
+                    </div>
+                    <p style="font-size:0.85rem; color:#555; margin-bottom:10px;">सर्विस: ${a.service}</p>
+                    <button class="btn btn-primary" style="padding:6px; font-size:0.8rem;" onclick="completeAppointment(${i})">कम्प्लीट & बिल बनाएं</button>
+                </div>
+            `;
+        });
+    }
+
+    function navTo(screenId, btn) {
         document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
+        document.querySelectorAll('.nav-btn').forEach(b => b.classList.remove('active'));
         document.getElementById(screenId).classList.add('active');
+        if(btn) btn.classList.add('active');
     }
 
-    function handleOwnerLogin() {
-        const pin = document.getElementById('ownerPinInput').value;
-        if (pin === SECRET_OWNER_PIN) {
-            const shopName = document.getElementById('ownerShopNameInput').value;
-            if(shopName) {
-                document.getElementById('headerShopName').innerText = shopName;
-                document.getElementById('displayShopName').innerText = shopName;
-                document.getElementById('editShopName').value = shopName;
-            }
-            switchRole('owner');
-        } else {
-            alert('गलत पिन! कृपया सही मास्टर पिन दर्ज करें।');
+    function loginCustomer() {
+        const p = document.getElementById('custPhone').value;
+        if(p) {
+            document.getElementById('roleTag').innerText = "कस्टमर मोड";
+            navTo('screen-customer');
+        } else alert('कृपया अपना मोबाइल नंबर दर्ज करें!');
+    }
+
+    function loginStaff() {
+        const code = document.getElementById('staffCode').value;
+        if(code === state.staffCode) {
+            document.getElementById('roleTag').innerText = "स्टाफ मोड";
+            navTo('screen-staff');
+        } else alert('गलत स्टाफ कोड!');
+    }
+
+    function loginOwner() {
+        const pin = document.getElementById('ownerPin').value;
+        if(pin === state.ownerPin) {
+            document.getElementById('roleTag').innerText = "ओनर मोड";
+            navTo('screen-owner');
+        } else alert('गलत ओनरPin!');
+    }
+
+    function addService() {
+        const name = document.getElementById('newServiceName').value;
+        const price = document.getElementById('newServicePrice').value;
+        if(name && price) {
+            state.services.push({ name, price });
+            renderServices();
+            document.getElementById('newServiceName').value = '';
+            document.getElementById('newServicePrice').value = '';
+            alert('नई सर्विस सफलतापूर्वक जोड़ी गई!');
         }
     }
 
-    function handleStaffLogin() {
-        const code = document.getElementById('staffCodeInput').value;
-        if (code === VALID_STAFF_CODE) {
-            switchRole('staff');
-        } else {
-            alert('अमान्य जॉइनिंग कोड!');
-        }
+    function saveSettings() {
+        state.shopName = document.getElementById('settingShopName').value;
+        state.staffCode = document.getElementById('settingStaffCode').value;
+        state.ownerPin = document.getElementById('settingOwnerPin').value;
+        document.getElementById('headerTitle').innerText = state.shopName;
+        alert('ओनर सेटिंग्स अपडेट हो गईं!');
     }
 
-    function saveOwnerSettings() {
-        const newName = document.getElementById('editShopName').value;
-        const newCode = document.getElementById('editStaffCode').value;
-        const newPin = document.getElementById('editOwnerPin').value;
-        document.getElementById('headerShopName').innerText = newName;
-        document.getElementById('displayShopName').innerText = newName;
-        alert('बदलाव सुरक्षित हो गए हैं!');
+    function submitBooking() {
+        const name = document.getElementById('bookName').value;
+        const phone = document.getElementById('bookPhone').value;
+        const service = document.getElementById('bookServiceSelect').value;
+        state.appointments.push({ name, phone, service, time: "जल्द ही" });
+        renderAppointments();
+        alert('आपकी अपॉइंटमेंट सफलतापूर्वक बुक हो गई है!');
+        navTo('screen-customer');
     }
 
-    function logout() {
-        currentRole = 'guest';
-        document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
-        document.getElementById('screen-onboarding').classList.add('active');
-        document.getElementById('userRoleTag').innerText = "गेस्ट मोड";
-        document.getElementById('bottomNav').style.display = 'none';
+    function completeAppointment(index) {
+        state.appointments.splice(index, 1);
+        renderAppointments();
+        alert('बुकिंग पूर्ण के रूप में मार्क की गई!');
     }
+
+    window.onload = init;
 </script>
 
 </body>
